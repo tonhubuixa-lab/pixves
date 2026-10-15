@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/*
+ * Tokens de tema. O padrão (:root) é o escuro, idêntico ao visual
+ * original — páginas públicas de checkout (/produto, /checkout) nunca
+ * recebem a classe .light, então continuam exatamente como eram.
+ * A classe .light é aplicada só dentro da área admin (ThemeProvider).
+ */
+:root {
+  --background: #020617;
+  --foreground: #e2e8f0;
+  --foreground-strong: #f1f5f9;
+  --surface: #0f172a;
+  --surface-muted: #020617;
+  --border: #1e293b;
+  --border-strong: #334155;
+  --muted: #94a3b8;
+  --muted-2: #64748b;
+  --brand: #22c55e;
+  --brand-dark: #16a34a;
+  --skeleton-1: rgb(30 41 59 / 60%);
+  --skeleton-2: rgb(51 65 85 / 60%);
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
+  color-scheme: dark;
+}
+
+.light {
+  --background: #f8fafc;
+  --foreground: #334155;
+  --foreground-strong: #0f172a;
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --muted: #475569;
+  --muted-2: #64748b;
+  --brand: #16a34a;
+  --brand-dark: #15803d;
+  --skeleton-1: rgb(226 232 240 / 80%);
+  --skeleton-2: rgb(203 213 225 / 80%);
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-strong: var(--foreground-strong);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  height: 100%;
+  /* Rede de segurança: nenhuma página deste app rola horizontalmente —
+     qualquer elemento que vazar da largura da viewport fica cortado em
+     vez de empurrar um scroll lateral. */
+  overflow-x: hidden;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgb(34 197 94 / 10%), transparent),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: rgb(34 197 94 / 30%);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.skeleton {
+  background-image: linear-gradient(
+    100deg,
+    var(--skeleton-1) 30%,
+    var(--skeleton-2) 50%,
+    var(--skeleton-1) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .skeleton,
+  .animate-soft-pulse {
+    animation: none;
+  }
+}
+
+/* Scrollbar discreta */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
